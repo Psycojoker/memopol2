@@ -6,7 +6,7 @@ Install the base dependencies
 
 Install the base python virtualenv tools (on Ubuntu you have to enable universe):
 
-    sudo apt-get install python-setuptools python-dev libxml2-dev libxslt1-dev libfreetype6-dev libpng12-dev python-pip
+    sudo apt-get install python-setuptools python-dev libxml2-dev libxslt1-dev libfreetype6-dev libpng12-dev python-pip libatlas-base-dev
     sudo pip install virtualenv
     sudo pip install virtualenvwrapper
 

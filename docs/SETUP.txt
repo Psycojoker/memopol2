@@ -17,6 +17,17 @@ Install the following to have the tools on Archlinux (please note that you may h
 
     pacman -S python2 libxml2 libxslt freetype2 python2-pip python2-virtualenv python-virtualenvwrapper libpng
 
+Install the base dependencies on Fedora
+==========================================
+
+Install the following to have the tools on Fedora (please note that you may have to adapt the following install procedure):
+
+    yum install python-setuptools python-devel libxml2-devel libxslt-devel freetype freetype-devel libpng libpng-devel python-pip atlas-devel g++
+
+    pip-python install virtualenv
+    pip-python install virtualenvwrapper
+
+
 Setup your virtual environment
 ===============================
 

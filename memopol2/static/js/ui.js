@@ -15,7 +15,7 @@ function onMugshotError(source) {
 $('#content h1:first').addClass('document-title');
 
 // table
-$("table.mep-list").tablesorter({ headers: { 4: { sorter: false }, }  });
+$("table.mep-list").tablesorter();
 $("table.mp-list").tablesorter({ headers: { 2: { sorter: false }, }  });
 $('table.mep-list, table.mp-list').tableFilter();
 $("table.mep-list tbody tr, table.mp-list tbody tr").hover(

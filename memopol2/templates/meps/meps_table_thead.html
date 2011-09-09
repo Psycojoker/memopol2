@@ -10,8 +10,8 @@
     {% if group_role %}<th filter-type='ddl' class="cell-choice">Role</th>{% endif %}
     {% if committee_role %}<th filter-type='ddl' class="cell-choice">Role</th>{% endif %}
     {% if delegation_role %}<th filter-type='ddl' class="cell-choice">Role</th>{% endif %}
-    <th filter='false' class="cell-contact">Contact</th>
+    <th filter='false' class="{sorter: false}" class="cell-contact">Contact</th>
     {% if score_listing %}<th filter='false' class="cell-score">Scores</th>{% endif %}
-    {% if proposal_votes_listing %}<th filter='false' class="cell-score">Votes</th>{% endif %}
+    {% if proposal_votes_listing %}<th filter='false' class="{sorter: false}" class="cell-score">Votes</th>{% endif %}
   </tr>
 </thead>

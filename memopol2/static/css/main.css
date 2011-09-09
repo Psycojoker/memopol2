@@ -528,15 +528,15 @@ a.ok, span.ok, div.ok, a.nok, span.nok, div.nok, span.abstention, a.abstention, 
 }
 
 a.ok, span.ok, div.ok {
-    background: url("../img/icons/bullet-green.png") no-repeat top left !important;
+    background: url("../img/icons/bullet-green.png") no-repeat center left !important;
 }
 
 a.nok,span.nok, div.nok {
-    background: url("../img/icons/bullet-red.png") no-repeat top left !important;
+    background: url("../img/icons/bullet-red.png") no-repeat center left !important;
 }
 
 span.abstention, a.abstention, div.abstention {
-    background: url("../img/icons/bullet-orange.png") no-repeat top left !important;
+    background: url("../img/icons/bullet-orange.png") no-repeat center left !important;
 }
 
 .clear-all {

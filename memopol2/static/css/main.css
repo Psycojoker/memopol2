@@ -711,3 +711,14 @@ ul.recommendation ul li {
 .feedback-nocont { background: grey; color: white;}
 .feedback-icon:hover > div.feedback-popup { display: block; }
 .feedback-popup { position: absolute; border: 1px solid #454545; background: white; padding: 5px; color: black; }
+
+/* Home europe map*/
+#europe-map { border: 1px solid black;}
+#europe-map * { fill:none; font-family: helvetica;}
+#europe-map rect { fill:#EEEEF2; }
+#europe-map path { fill:#FFFFFF; stroke:#000; stroke-width:8; } 
+#europe-map a.eu path { fill:#CDCDFF; border: 2px;}
+#europe-map a.eu text { fill: #000; font-size: 200px; }
+#europe-map a:hover {  text-decoration: none;}
+#europe-map a.eu:hover path { fill:#DDDDFF; stroke-width: 24px;}
+#europe-map a.eu:hover text { font-weight: bolder; }

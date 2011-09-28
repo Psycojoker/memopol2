@@ -31,7 +31,7 @@
   {% endif %}
   {% if choice_listing %}
   <td>
-      <div class="{% if choice == recommendation.recommendation %}ok{% else %}{% if choice == "abstention" %}abstention{% else %}nok{% endif %}{% endif %}">{{ choice }}</div>
+      <div class="{% if choice == recommendation.recommendation %}ok{% else %}{% if choice == "abstention" or choice == "absent" %}abstention{% else %}nok{% endif %}{% endif %}">{{ choice }}</div>
   </td>
   {% endif %}
   {% if organization_role %}

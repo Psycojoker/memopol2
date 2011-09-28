@@ -15,6 +15,10 @@
   <img class="mugshot" alt="{{ mp }}" src="http://www.nosdeputes.fr/depute/photo/{{ mp.first_name|slugify }}-{{ mp.last_name|slugify}}/192" onerror="onMugshotError(this);"/>
 <span>{{ mp }}  </span>
 {{ mp.group.abbreviation }}
+<a href="#" id="call-now" />
+  <img src="{{ MEDIA_URL }}img/call_now.png" />
+</a>
+
 </div>
 
 <li><i>{% if mp.gender == "F" %}{% trans "Born on (female)" %}{% else %}{% trans "Born on" %}{% endif %}</i>

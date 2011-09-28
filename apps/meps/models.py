@@ -1,5 +1,6 @@
 from datetime import date
 from django.db import models
+from django.db.models import Count
 from django.contrib.comments.moderation import CommentModerator, moderator
 from django.core.urlresolvers import reverse
 from memopol2.utils import reify
@@ -94,6 +95,10 @@ class Committee(models.Model):
     @property
     def meps(self):
         return self.mep_set.filter(active=True, committeerole__end=date(9999, 12, 31)).distinct()
+
+    @classmethod
+    def ordered_by_meps_count(cls):
+        return cls.objects.distinct().filter(committeerole__mep__active=True, committeerole__end=date(9999, 12, 31)).annotate(meps_count=Count('committeerole__mep', distinct=True)).order_by('-meps_count')
 
 
 class Building(models.Model):

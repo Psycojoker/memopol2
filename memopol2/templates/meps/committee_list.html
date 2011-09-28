@@ -8,7 +8,7 @@
     {% if committee.meps|length %}
     <li>
         <a href="{% url meps:index_by_committee committee.abbreviation %}">{{ committee.name }} ({{ committee.abbreviation }})</a>
-        {% blocktrans with committee.meps|length as count %} - {{ count }} MEPs {% endblocktrans %}
+        {% blocktrans with committee.meps_count as count %} - {{ count }} MEPs {% endblocktrans %}
     </li>
     {% endif %}
 {% endfor %}

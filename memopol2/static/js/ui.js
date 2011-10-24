@@ -12,7 +12,6 @@ function onMugshotError(source) {
 
 (function($) {
 
-$(window).bind( 'hashchange', function(e) { console.log(e)});
 $.parseQuery = function(query) {
     // jQuery do not provide any helper to arse query strings, it's a shame…
     var hash = {};
@@ -156,9 +155,17 @@ $(".collapsible").click(function(){
 
 
 // contact details
-$('a.more-contact').click(function() {
+$('body').delegate('a.more-contact', 'click', function() {
     // dynamic contact detail
-    $('div.body', $(this).parents('td')).load($(this).attr('href'));
+    var $this = $(this);
+    var $body = $this.parents('td').find('div.body');
+    $body.data('previousState', $body.html()).load($this.attr('href'));
+    return false;
+});
+
+$('body').delegate('a.less-contact', 'click', function() {
+    var $body = $(this).parents('td').find('div.body');
+    $body.html($body.data('previousState'));
     return false;
 });
 

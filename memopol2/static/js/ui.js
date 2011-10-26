@@ -44,83 +44,60 @@ try {
    });
 } catch(err) {}
 
-function FilterExtension(table) {
-    this.table = $(table);
-    var filtersBackup = this.filtersBackup = [];
-    this.table.find('.filters .filter').each(function(index, filter) {
-        filtersBackup[index] = $(filter).children().clone();
-    });
-    this.table.bind('filteredRows', $.proxy(this, 'refresh'));
-    this.buildIndexes();
-    this.refresh(false);
 
-    var callback =  $.proxy(this, 'onQueryChanged');
-    $(document).ready(callback)
-    $(window).bind('hashchange', callback);
+function Filter(table, input) {
+    this.table = table;
+    this.input = $(input);
+    this.backup = this.input.children().clone();
+    
+    this.index = this.input.parent().prevAll().length + 1;
+    this.position = ':nth-child(' + this.index + ')';
+    this.name = this.table.find('thead th' + this.position).attr('class').match(/row-(\w+)/)[1];
+    this.cells = this.table.find('tbody td' + this.position);
+    this.display(this.count());
 }
 
-FilterExtension.prototype.BASE_HASH = '#!filters?';
-
-FilterExtension.prototype.BASE_HASH_RE = /^#!filters\?/;
-
-FilterExtension.prototype.buildIndexes = function() {
-    var nameIndex = this.nameIndex = {};
-    var filterIndex = this.filterIndex = {};
-    var $table = this.table;
-    $table.find('thead th').each(function(index, header) {
-        var match = $(header).attr('class').match(/row-(\w+)/);
-        if (match) {
-            var name = match[1];
-            nameIndex[index] = name;
-            filterIndex[name] = index;
-        }
-    });
+Filter.prototype.isSelected = function() {
+    var value = this.input.val();
+    return $.trim(value) && value !== FILTERS_SELECT_LABEL;
 };
 
-FilterExtension.prototype.onQueryChanged = function() {
-    var hash = window.location.hash;
-    if (!hash.match(this.BASE_HASH_RE)) return false;
-    var filters = $.parseQuery(hash.replace(this.BASE_HASH_RE, ''));
+Filter.prototype.select = function(value) {
+    this.input.val(value);
+};
 
-    for (var name in filters) {
-        if (filters.hasOwnProperty(name)) {
-            var filter = this.table.find('#filter_' + this.filterIndex[name]);
-            filter.val(filters[name]);
-        }
+Filter.prototype.reset = function() {
+    var value = this.val();
+    this.input.empty().append(this.backup.clone()).val(value);
+};
+
+Filter.prototype.val = function() {
+    return this.input.val();
+};
+
+Filter.prototype.refresh = function() {
+    if (!this.isSelected()) {
+        this.reset();
+        this.display(this.count());
+        return false;
     }
-    this.table.tableFilterRefresh();
+    return this.val();
 };
 
-FilterExtension.prototype.refresh = function(updateHash) {
-    var hash = {};
-    this.table.find('.filters .filter').each($.proxy(function(index, filter) {
-        var $filter = $(filter);
-        if (!this.isSelected($filter)) {
-            // reset select from previous state
-            var filterValue = $filter.val();
-            $filter.empty().append(this.filtersBackup[index].clone()).val(filterValue);
-
-            this.displayCounts($filter, this.countEntries($filter));
-        } else {
-            var filterIndex = parseInt($filter.attr('id').replace(/[^\d]+/, ''), 10);
-            hash[this.nameIndex[filterIndex]] = $filter.val();
-        }
+Filter.prototype.display = function(counts) {
+    this.input.find('option[value]').each($.proxy(function(index, option) {
+        var $option = $(option);
+        var count = counts[$.trim($option.val())] || 0;
+        
+        $option.html($option.html() + ' (' + count + ')');
+        if (!count) $option.remove();
     }, this));
     
-    if (updateHash) {
-        window.location.hash = $.isEmptyObject(hash) ? '' : this.BASE_HASH + $.param(hash);
-    }
 };
 
-FilterExtension.prototype.isSelected = function(filter) {
-    var filterValue = filter.val();
-    return $.trim(filterValue) && filterValue != FILTERS_SELECT_LABEL;
-};
-
-FilterExtension.prototype.countEntries = function(filter) {
+Filter.prototype.count = function() {
     var counts = {};
-    var index = filter.parent().prevAll().length;
-    var cells = this.table.find('tbody tr[filtermatch!=false] td:nth-child(' + (index + 1) + ')');
+    var cells = this.cells.parents('tr[filtermatch!=false]').find('td' + this.position);
     cells.each(function(index, cell) {
         var html = $(cell).html();
         counts[html] = (counts[html] || 0) + 1;
@@ -128,24 +105,53 @@ FilterExtension.prototype.countEntries = function(filter) {
     return this.stripKeys(counts);
 };
 
-FilterExtension.prototype.displayCounts = function(filter, counts) {
-    filter.find('option[value]').each($.proxy(function(index, option) {
-        $option = $(option);
-        count = counts[$.trim($option.val())] || 0;
-        
-        $option.html($option.html() + ' (' + count + ')');
-        if (!count && !this.isSelected(filter)){
-            $option.remove();
-        }
-    }, this));
-};
-
-FilterExtension.prototype.stripKeys = function(counts) {
+Filter.prototype.stripKeys = function(counts) {
     var stripedCounts = {};
     for (html in counts) {
         stripedCounts[jQuery.trim(html.replace(/<\/?[^>]+>/gi, ''))] = counts[html];
     }
     return stripedCounts;
+};
+
+
+function FilterExtension(table) {
+    this.table = $(table);
+    var filters = this.filters = [];
+    this.table.find('thead .filters .filter').each(function(i, select) {
+        filters.push(new Filter(table, select));
+    });
+
+    this.table.bind('filteredRows', $.proxy(this, 'onFilteredRows'));
+    var onQueryChanged = $.proxy(this, 'onQueryChanged');
+    $(document).ready(onQueryChanged)
+    $(window).bind('hashchange', onQueryChanged);
+}
+
+FilterExtension.prototype.BASE_HASH = '#!filters?';
+
+FilterExtension.prototype.BASE_HASH_RE = /^#!filters\?/;
+
+FilterExtension.prototype.onQueryChanged = function() {
+    var hash = window.location.hash;
+    if (!hash.match(this.BASE_HASH_RE)) return false;
+
+    var query = $.parseQuery(hash.replace(this.BASE_HASH_RE, ''));
+    $.each(this.filters, $.proxy(function(index, filter) {
+        var value = query[filter.name];
+        if (index) filter.refresh();
+        if (value) filter.select(value);
+        this.table.tableFilterRefresh();
+        filter.refresh();
+    }, this));
+};
+
+FilterExtension.prototype.onFilteredRows = function() {
+    var hash = {};
+    $.each(this.filters, function(index, filter) {
+        var value = filter.refresh();
+        if (value) hash[filter.name] = value;
+    });
+    window.location.hash = $.isEmptyObject(hash) ? '' : this.BASE_HASH + $.param(hash);
 };
 
 var filterExtension = new FilterExtension($("table.mep-list"));

@@ -428,8 +428,7 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
     background-color: #ddd;
 }
 
-a.more-contact,a.less-contact {
-    display:block;
+.toogle-contact {
     text-align: right;
 }
 

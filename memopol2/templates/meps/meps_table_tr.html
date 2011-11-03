@@ -73,7 +73,10 @@
           </li>
         {% endif %}
       </ul>
-      <a class="more-contact" href="{% url meps:mep_contact mep.id %}">{% trans "More information" %}...</a>
+    </div>
+    <div class="toogle-contact">
+        <a class="more-contact" href="{% url meps:mep_contact mep.id %}">{% trans "More information" %}...</a>
+        <a class="less-contact hidden" href="#">{% trans "Less information" %}...</a>
     </div>
   </td>
   {% if score_listing %}

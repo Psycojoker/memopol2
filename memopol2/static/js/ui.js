@@ -178,18 +178,22 @@ $(".collapsible").click(function(){
 
 
 // contact details
-$('body').delegate('a.more-contact', 'click', function() {
+$('body').delegate('.toogle-contact', 'click', function() {
+    $(this).find('.less-contact,.more-contact').toggleClass('hidden');
+});
+
+$('body').delegate('a.more-contact', 'click', function(event) {
+    event.preventDefault();
     // dynamic contact detail
     var $this = $(this);
     var $body = $this.parents('td').find('div.body');
     $body.data('previousState', $body.html()).load($this.attr('href'));
-    return false;
 });
 
-$('body').delegate('a.less-contact', 'click', function() {
+$('body').delegate('a.less-contact', 'click', function(event) {
+    event.preventDefault();
     var $body = $(this).parents('td').find('div.body');
     $body.html($body.data('previousState'));
-    return false;
 });
 
 // the image #call-now click get his link from a.call-now from the contact details

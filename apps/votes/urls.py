@@ -6,6 +6,8 @@ from votes.models import Proposal, Vote, Recommendation, RecommendationData
 from reps.models import Representative
 from views import VoteRecommendation, VoteRecommendationChoice
 
+from votes.feeds import LatestProposalsFeed
+
 # TODO: refactor this function, should probably be moved to class based generic views if possible
 def proposal_rep(request, proposal_id, mep_id):
     representative = get_object_or_404(Representative, id=mep_id)
@@ -27,4 +29,5 @@ urlpatterns = patterns('',
     url(r'^(?P<pk>[a-zA-Z/-_]+)/dataporn/$', DetailView.as_view(model=Proposal, context_object_name='vote', template_name="votes/proposal_dataporn.html"), name='detail_dataporn'),
     url(r'^(?P<proposal_id>[a-zA-Z/-_]+)/(?P<mep_id>.+)/$', proposal_rep, name='rep'),
     url(r'^(?P<pk>[a-zA-Z/-_]+)/$', DetailView.as_view(model=Proposal, context_object_name='vote'), name='detail'),
+    url(r'^latest/feed', LatestProposalsFeed()),
 )

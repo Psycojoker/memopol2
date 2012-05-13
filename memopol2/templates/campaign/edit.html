@@ -21,18 +21,18 @@ $(document).ready(function(){
 {% endif %}
 
 <div class="rounded_box">
-<h2>{{campaign.title}} (<a href="/admin/campaign/mepscore/">Edit individual MEPs scores</a>)</h2>
+    <h2>{{campaign.title}} (<a href="/admin/campaign/mepscore/">{% trans "Edit individual MEPs scores" %}</a>)</h2>
 {{campaign.intro}}
 </div>
 
 <div>
    <form action="/campaign/edit/{{campaign.id}}/" method="post">{% csrf_token %}
       {{ form.as_p }}
-      <input type="submit" value="Submit" />
+      <input type="submit" value="{% trans "Submit" %}" />
    </form>
    <hr />
    
-   <h3>Notable MEPs in this campaign</h3>
+   <h3>{% trans "Notable MEPs in this campaign" %}</h3>
    <table class="mep-list tablesorter">
      <thead>
        <tr>
@@ -105,7 +105,7 @@ $(document).ready(function(){
                    <span style="float: left">
                       <div class="fieldWrapper">
                          {{ form.text.errors }}
-                         <label for="id_text">Feedback - crap will be moderated and gives you bad karma!</label>
+                         <label for="id_text">{% trans "Feedback - crap will be moderated and gives you bad karma!" %}</label>
                          {{ form.text }}
                       </div>
                    </span>

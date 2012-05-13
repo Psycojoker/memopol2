@@ -50,20 +50,20 @@ $(document).ready(function(){
 
 {% if not mepscores %}
 <div>
-    <p>Have you contacted a MEP? Wanna get credit? Tell us how it went!</p>
+    <p>{% trans "Have you contacted a MEP? Wanna get credit? Tell us how it went!" %}</p>
 </div>
 {% endif %}
 
-<h3>MEPs with campaign feedback</h3>
+<h3>{% trans "MEPs with campaign feedback" %}</h3>
 <table class="table">
   <thead>
     <tr>
-      <th filter='false' class="row-feedback">Feedback</th>
-      <th filter='false' class="row-name">MEP</th>
-      <th filter-type='ddl' class="row-country">Country</th>
-      <th filter-type='ddl' class="row-group">Group</th>
-      <th filter-type='ddl' class="row-party">Party</th>
-      <th filter='false' class="cell-contact">Contact</th>
+        <th filter='false' class="row-feedback">{% trans "Feedback" %}</th>
+        <th filter='false' class="row-name">{% trans "MEP" %}</th>
+        <th filter-type='ddl' class="row-country">{% trans "Country" %}</th>
+        <th filter-type='ddl' class="row-group">{% trans "Group" %}</th>
+        <th filter-type='ddl' class="row-party">{% trans "Party" %}</th>
+        <th filter='false' class="cell-contact">{% trans "Contact" %}</th>
     </tr>
   </thead>
   <tbody>
@@ -121,34 +121,34 @@ $(document).ready(function(){
                    {{ form.non_field_errors }}
                    <div class="fieldWrapper">
                       {{ form.type.errors }}
-                      <label for="id_type">Contact Type:</label>
+                      <label for="id_type">{% trans "Contact Type:" %}</label>
                       {{ form.type }}
                    </div>
                    <div class="fieldWrapper">
                       {{ form.response.errors }}
-                      <label for="id_response">Meps response:</label>
+                      <label for="id_response">{% trans "Meps response:" %}</label>
                       {{ form.response }}
                    </div>
                    <div class="fieldWrapper">
                       {{ form.usercontact.errors }}
-                      <label for="id_usercontact">How to contact you?</label>
+                      <label for="id_usercontact">{% trans "How to contact you?" %}</label>
                       {{ form.usercontact }}
                    </div>
                 </div>
                 <div class="grid_6">
                    <div class="fieldWrapper">
                       {{ form.text.errors }}
-                      <label for="id_text">Feedback - crap will be moderated and gives you bad karma!</label>
+                      <label for="id_text">{% trans "Feedback - crap will be moderated and gives you bad karma!" %}</label>
                       {{ form.text }}
                    </div>
                 </div>
                 <div class="grid_2">
                    <div class="fieldWrapper">
-                      <label for="id_captcha_1">Enter the result:</label>
+                       <label for="id_captcha_1">{% trans "Enter the result:" %}</label>
                       {{ form.captcha.errors }}
                       {{ form.captcha }}
                    </div>
-                   <input type="submit" class="feedback-submit button" value="send <3 datalove" />
+                   <input type="submit" class="feedback-submit button" value="{% trans "send <3 datalove" %}" />
                 </div>
              </form>
        </td></tr>
@@ -157,32 +157,32 @@ $(document).ready(function(){
 </table>
 {% if not mepscores %}
 <div>
-    <p><a class="button" href="{% addurlparameter force 1 %}">Get a new set of MEPs</a></p>
+    <p><a class="button" href="{% addurlparameter force 1 %}">{% trans "Get a new set of MEPs" %}</a></p>
 </div>
 {% endif %}
 
-<h3>Campaign Details</h3>
+<h3>{% trans "Campaign Details" %}</h3>
 <div class="campaign-details">{{campaign.details}}</div>
 
 {% if mepscores %}
-   <h3>Notable MEPs in this campaign</h3>
+<h3>{% trans "Notable MEPs in this campaign" %}</h3>
    <table class="table">
      <thead>
        <tr>
-         <th filter='false' class="row-influence">Influence</th>
-         <th filter='false' class="row-feedback">Feedback</th>
-         <th filter='false' class="row-name">MEP</th>
-         <th filter-type='ddl' class="row-country">Country</th>
-         <th filter-type='ddl' class="row-group">Group</th>
-         <th filter-type='ddl' class="row-party">Party</th>
-         <th filter='false' class="cell-contact">Contact</th>
+           <th filter='false' class="row-influence">{% trans "Influence" %}</th>
+           <th filter='false' class="row-feedback">{% trans "Feedback" %}</th>
+           <th filter='false' class="row-name">{% trans "MEP" %}</th>
+           <th filter-type='ddl' class="row-country">{% trans "Country" %}</th>
+           <th filter-type='ddl' class="row-group">{% trans "Group" %}</th>
+           <th filter-type='ddl' class="row-party">{% trans "Party" %}</th>
+           <th filter='false' class="cell-contact">{% trans "Contact" %}</th>
        </tr>
      </thead>
      <tbody>
        {% for ms, form in mepscores %}
           <tr>
             <td>{{ms.score}}</td>
-            <td><span class="toggle-feedback button clickable">Feedback!</span></td>
+            <td><span class="toggle-feedback button clickable">{% trans "Feedback!" %}</span></td>
             <td><a href="{{ ms.mep.get_absolute_url }}">{{ ms.mep.first_name }} {{ ms.mep.last_name|upper }}</a></td>
             <td>{{ ms.mep.country_tag|safe }}</td>
             <td>{{ ms.mep.group_tag|safe }}</td>
@@ -221,34 +221,34 @@ $(document).ready(function(){
                       {{ form.non_field_errors }}
                       <div class="fieldWrapper">
                          {{ form.type.errors }}
-                         <label for="id_type">Contact Type:</label>
+                         <label for="id_type">{% trans "Contact Type:" %}</label>
                          {{ form.type }}
                       </div>
                       <div class="fieldWrapper">
                          {{ form.response.errors }}
-                         <label for="id_response">Meps response:</label>
+                         <label for="id_response">{% trans "Meps response:" %}</label>
                          {{ form.response }}
                       </div>
                       <div class="fieldWrapper">
                          {{ form.usercontact.errors }}
-                         <label for="id_usercontact">How to contact you?</label>
+                         <label for="id_usercontact">{% trans "How to contact you?" %}</label>
                          {{ form.usercontact }}
                       </div>
                    </div>
                    <div class="grid_6">
                       <div class="fieldWrapper">
                          {{ form.text.errors }}
-                         <label for="id_text">Feedback - crap will be moderated and gives you bad karma!</label>
+                         <label for="id_text">{% trans "Feedback - crap will be moderated and gives you bad karma!" %}</label>
                          {{ form.text }}
                       </div>
                    </div>
                    <div class="grid_2">
                       <div class="fieldWrapper">
-                         <label for="id_captcha_1">Enter the result:</label>
+                          <label for="id_captcha_1">{% trans "Enter the result:" %}</label>
                          {{ form.captcha.errors }}
                          {{ form.captcha }}
                       </div>
-                      <input type="submit" class="feedback-submit" value="send <3 datalove" />
+                      <input type="submit" class="feedback-submit" value="{% trans "send <3 datalove" %}" />
                    </div>
                 </form>
           </td></tr>

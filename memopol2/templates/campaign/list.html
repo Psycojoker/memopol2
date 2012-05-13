@@ -17,23 +17,23 @@
   <table class="tablesorter">
      <thead>
         <tr>
-           <th>Name</th>
-           <th>Results</th>
-           {% if user.is_authenticated %}<th>Actions</th>{% endif %}
+            <th>{% trans "Name" %}</th>
+            <th>{% trans "Results" %}</th>
+            {% if user.is_authenticated %}<th>{% trans "Actions" %}</th>{% endif %}
         </tr>
      </thead>
      <tbody>
   {%endif%}
   <tr{% if c.finished %} class="campaign-over"{%endif%}>
      <td><a href="/campaign/view/{{c.id}}/">{{c.title}}</a></td>
-     <td><a href="/campaign/report/{{c.id}}/">{{c.debriefing_set.count}} responses for {{ mepcnt }} MEP(s)</a></td>
-           {% if user.is_authenticated %}<td><a href="/campaign/edit/{{c.id}}/">Edit influence</a></td>{% endif %}
+     {% blocktrans %}<td><a href="/campaign/report/{{c.id}}/">{{c.debriefing_set.count}} responses for {{ mepcnt }} MEP(s)</a></td>{% endblocktrans %}
+     {% if user.is_authenticated %}<td><a href="/campaign/edit/{{c.id}}/">{% trans "Edit influence" %}</a></td>{% endif %}
   </tr>
   {%if forloop.last %}
      </tbody>
   </table>
   {%endif%}
 {% empty %}
-   No campaigns yet. {% if not user.is_authenticated %}<a href="{% url admin:index %}">{% trans "Login" %}</a> and create one{% else %}<a href="/admin/campaign/campaign/add/">Create one.</a>{% endif %}
+{% trans "No campaigns yet." %} {% if not user.is_authenticated %}<a href="{% url admin:index %}">{%trans "Login" %}</a> {% trans "and create one" %} {% else %}<a href="/admin/campaign/campaign/add/">{% trans "Create one." %}</a>{% endif %}
 {% endfor %}
 {% endblock %}

@@ -19,7 +19,7 @@
 
 <div class="container_12">
     <div id="header">
-        <h1><a href="/">{% trans "The Political Memory of la Quadrature du Net" %}</a></h1>
+        <h1><a href="/">{% trans "The Political Memory of La Quadrature du Net" %}</a></h1>
       <a href="{% url contact_form %}">Contact</a>
       {% if user.is_staff %}
           <a href="{% url admin:index %}">{% trans "Administration" %}</a>
@@ -98,11 +98,11 @@
 
 <div id="footer">
   <div>
-    Memopol is free software <a href="https://gitorious.org/memopol2-0">released</a> under the terms of the
-    <a href="http://www.gnu.org/licenses/agpl.html">GNU aGPLV3+</a> - <a href="https://projets.lqdn.fr/projects/mempol">Bug tracker system</a> - <a href="https://projets.lqdn.fr/projects/mempol/issues/new">Repport a bug</a>
+      {% blocktrans %} Memopol is free software <a href="https://gitorious.org/memopol2-0">released</a> under the terms of the
+      <a href="http://www.gnu.org/licenses/agpl.html">GNU aGPLV3+</a> - <a href="https://projets.lqdn.fr/projects/mempol">Bug tracking system</a> - <a href="https://projets.lqdn.fr/projects/mempol/issues/new">Report a bug</a>{% endblocktrans %}
   </div>
   <div>
-    Provided by <a href="http://www.laquadrature.net/">La Quadrature du Net</a>
+      {% trans "Provided by" %} <a href="http://www.laquadrature.net/">La Quadrature du Net</a>
   </div>
 </div>
 

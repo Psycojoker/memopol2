@@ -16,8 +16,8 @@ pre.prettyprint {
 {% block content %}
 
 <h1>{{ object.title }}{% if object.title != object.proposal_name %} from {{ object.proposal_name }}{% endif %}</h1>
-<p>Imported: {{ object.imported }}{% if object.recommendation %} as <a href="{% url votes:recommendation object.recommendation.proposal.id object.recommendation.id %}">{{ object.recommendation.title }}</a>{% endif %}</p>
-<p>Date: {{ object.date }}</p>
+<p>{% blocktrans %}Imported: {{ object.imported }}{% if object.recommendation %} as <a href="{% url votes:recommendation object.recommendation.proposal.id object.recommendation.id %}">{{ object.recommendation.title }}</a>{% endif %}{% endblocktrans %}</p>
+<p>{% trans "Date:" %} {{ object.date }}</p>
 <pre class="prettyprint lang-js">
     {{ object.data_pretty|safe }}
 </pre>

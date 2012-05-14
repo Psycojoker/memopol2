@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h1>Votes of <a href="{% url meps:mep representative.id %}">{{ representative.first_name }} {{ representative.last_name }}</a> on <a href="{% url votes:detail proposal.id %}">{{ proposal.title }}</a></h1>
+<h1>{% blocktrans %}Votes of <a href="{% url meps:mep representative.id %}">{{ representative.first_name }} {{ representative.last_name }}</a> on <a href="{% url votes:detail proposal.id %}">{{ proposal.title }}</a>{% endblocktrans %}</h1>
 
 {% include "votes/legend.html" %}
 
@@ -10,12 +10,12 @@
 <ul>
     {% for vote in votes %}
     <li>
-        <a href="{% url votes:recommendation proposal.id vote.recommendation.id %}">{% if vote.recommendation.description %}{{ vote.recommendation.description }}{% else %}No description yet{% endif %}</a>
+    <a href="{% url votes:recommendation proposal.id vote.recommendation.id %}">{% if vote.recommendation.description %}{{ vote.recommendation.description }}{% else %}{% trans "No description yet" %}{% endif %}</a>
         <ul class="{{ vote.recommendation.recommendation }} recommendation">
-            <li><em>Part</em> : {{ vote.recommendation.part }}</li>
-            {% if vote.recommendation.recommendation %}<li><em>Recommendation</em> : <a href="{% url votes:recommendation_choice proposal.id vote.recommendation.id vote.recommendation.recommendation %}">{{ vote.recommendation.recommendation }}</a></li>{% endif %}
+            <li><em>{% trans "Part" %}</em> : {{ vote.recommendation.part }}</li>
+            {% if vote.recommendation.recommendation %}<li><em>{% trans "Recommendation" %}</em> : <a href="{% url votes:recommendation_choice proposal.id vote.recommendation.id vote.recommendation.recommendation %}">{{ vote.recommendation.recommendation }}</a></li>{% endif %}
             {% if vote.recommendation.weight %}<li><em>Weight</em> : {{ vote.recommendation.weight }}</li>{% endif %}
-            <li><em>Vote</em> : <a class="{% if vote.recommendation.recommendation == vote.choice %}ok{% else %}{% if vote.choice == "abstention" or vote.choice == "absent" %}abstention{% else %}nok{% endif %}{% endif %}" href="{% url votes:recommendation_choice proposal.id vote.recommendation.id vote.choice %}">{{ vote.choice }}</a></li>
+            <li><em>{% trans "Vote" %}</em> : <a class="{% if vote.recommendation.recommendation == vote.choice %}ok{% else %}{% if vote.choice == "abstention" or vote.choice == "absent" %}abstention{% else %}nok{% endif %}{% endif %}" href="{% url votes:recommendation_choice proposal.id vote.recommendation.id vote.choice %}">{{ vote.choice }}</a></li>
             <!--<li><em>Vote</em> : <a class="{% if vote.recommendation.recommendation == vote.choice %}ok{% else %}{% if vote.choice == "abstention" %}abstention{% else %}nok{% endif %}{% endif %}" href="{% url votes:recommendation_choice proposal.id vote.recommendation.id vote.choice %}">{{ vote.choice }}</a></li>-->
         </ul>
     </li>

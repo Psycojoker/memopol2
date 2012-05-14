@@ -22,10 +22,10 @@
 {% endfor %}
 
 
-<li><i>Site Web:</i><a target="_" href="{{ mp.an_webpage }}">{{ mp.an_webpage }}</a></li>
+<li><i>Site Web&nbsp;:</i><a target="_" href="{{ mp.an_webpage }}">{{ mp.an_webpage }}</a></li>
 {% for webaddr in mp.website_set.all %}
 <li>
-    <i>Site Web:</i><a target="_" href="{{ webaddr.url }}">{{ webaddr.url }}</a>
+    <i>Site Web&nbsp;:</i><a target="_" href="{{ webaddr.url }}">{{ webaddr.url }}</a>
 </li>
 {% endfor %}
 

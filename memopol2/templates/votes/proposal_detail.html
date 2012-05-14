@@ -13,15 +13,15 @@
     <object type="image/svg+xml" data="{% url trends:recommendation_countries_map vote.id %}" width="680" height="520"></object>
 </div>
 
-<p style="text-align: center;"><i><a href="{% url trends:documentation %}#countries_map">Trends explaination</a></i></p>
+<p style="text-align: center;"><i><a href="{% url trends:documentation %}#countries_map">{% trans "Trends explanation" %}</a></i></p>
 
 <h2 class="collapsible collapsed">Score repartition</h2>
 <center class="body">
 <img src="{% url trends:group_proposal_score_stacked vote.id %}">
-<p style="text-align: center;"><i><a href="{% url trends:documentation %}#groups">Trends explaination</a></i></p>
+<p style="text-align: center;"><i><a href="{% url trends:documentation %}#groups">{% trans "Trends explanation" %}</a></i></p>
 
 <img src="{% url trends:group_proposal_score_heatmap vote.id %}">
-<p style="text-align: center;"><i><a href="{% url trends:documentation %}#heatmap">Trends explaination</a></i></p>
+<p style="text-align: center;"><i><a href="{% url trends:documentation %}#heatmap">{% trans "Trends explanation" %}</a></i></p>
 </center>
 
 <br/>
@@ -37,13 +37,13 @@
     <ul>
         {% for v in subvote.list %}
         <li>
-            <a href="{% url votes:recommendation vote.id v.id %}">{% if v.description %}{{ v.description }}{% else %}No description yet.{% endif %}</a>
+        <a href="{% url votes:recommendation vote.id v.id %}">{% if v.description %}{{ v.description }}{% else %}{% trans "No description yet." %}{% endif %}</a>
             <ul class="{{ v.recommendation }} recommendation">
-                <li><em>Part</em> : {{ v.part }}</li>
-                {% if v.recommendation %}<li><em>Recommendation</em> : {{ v.recommendation }}</li>{% endif %}
-                {% if v.weight %}<li><em>Weight</em> : {{ v.weight }}</li>{% endif %}
+                <li><em>{% trans "Part" %}</em> : {{ v.part }}</li>
+                {% if v.recommendation %}<li><em>{% trans "Recommendation" %}</em> : {{ v.recommendation }}</li>{% endif %}
+                {% if v.weight %}<li><em>{% trans "Weight" %}</em> : {{ v.weight }}</li>{% endif %}
                 {% significant_votes v %}
-                <li>Votes ({{ significant_votes.count }} significant) (<a href="{% url votes:recommendation vote.id v.id %}">full list</a>)</li>
+                <li>{% blocktrans %}Votes ({{ significant_votes.count }} significant) (<a href="{% url votes:recommendation vote.id v.id %}">full list</a>){% endblocktrans %}</li>
                 <li>
                 <ul>
                   {% regroup v.vote_set.all by choice as result %}

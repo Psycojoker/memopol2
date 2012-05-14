@@ -10,13 +10,13 @@
     {% endfor %}
   </li>
 {% else %}
-<li>We don't have any email address for this european deputy</li>
+<li>{% trans "We don't have any email address for this european deputy" %}</li>
 {% endif %}
 <li class="sep">&nbsp;</li>
 
 {% if mep.bxl_building %}
 <li><b>{% trans "Brussels" %}</b><br/>
-    Building {{ mep.bxl_building.name }} <a class="highlight" href="{% url meps:bxl_floor mep.bxl_building.id mep.bxl_floor %}">{{ mep.bxl_office }}</a><br/>
+    {% trans "Building" %} {{ mep.bxl_building.name }} <a class="highlight" href="{% url meps:bxl_floor mep.bxl_building.id mep.bxl_floor %}">{{ mep.bxl_office }}</a><br/>
     {{ mep.bxl_building.street }}, {{ mep.bxl_building.postcode }} Bruxelles<br/>
     Tel.:  <a class="highlight call-now" href="callto://{{ mep.bxl_phone1|phone }}">{{ mep.bxl_phone1 }}</a>&nbsp;-&nbsp;<a class="highlight" href="callto://{{ mep.bxl_phone2|phone }}">{{ mep.bxl_phone2 }}</a>&nbsp;<br/>
     Fax: {{ mep.bxl_fax }}
@@ -26,7 +26,7 @@
 
 {% if mep.stg_building %}
 <li><b>{% trans "Strasbourg" %}</b><br/>
-    Building {{ mep.stg_building.name }} <a class="highlight" href="{% url meps:stg_floor mep.stg_building.id mep.stg_floor %}">{{ mep.stg_office }}</a><br/>
+    {% trans "Building" %} {{ mep.stg_building.name }} <a class="highlight" href="{% url meps:stg_floor mep.stg_building.id mep.stg_floor %}">{{ mep.stg_office }}</a><br/>
     {{ mep.stg_building.street }}, {{ mep.stg_building.postcode }} Strasbourg Cedex<br/>
     Tel.:  <a class="highlight" href="callto://{{ mep.stg_phone1|phone }}">{{ mep.stg_phone1 }}</a>&nbsp;-&nbsp;<a class="highlight" href="callto://{{ mep.stg_phone2|phone }}">{{ mep.stg_phone2 }}</a>&nbsp;<br/>
     Fax: {{ mep.stg_fax }}
@@ -35,7 +35,7 @@
 {% endif %}
 
 {% if not mep.stg_building and not mep.bxl_building %}
-<li>We don't have any contact information on this european deputy</li>
+<li>{% trans "We don't have any contact information on this european deputy" %}</li>
 <li class="sep">&nbsp;</li>
 {% endif %}
 

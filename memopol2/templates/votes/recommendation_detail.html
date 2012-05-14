@@ -2,16 +2,16 @@
 
 {% block content %}
 
-<h1>Recommendation on {{ recommendation.subject }} for the proposal <a href="{% url votes:detail proposal.id %}">{{ proposal.title }}</a></h1>
+<h1>{% blocktrans %}Recommendation on {{ recommendation.subject }} for the proposal <a href="{% url votes:detail proposal.id %}">{{ proposal.title }}</a>{% endblocktrans %}</h1>
 
 {% include "votes/legend.html" %}
 
 <p><b>{{ recommendation.description }}</b></p>
 
 <ul class="{{ recommendation.recommendation }} recommendation">
-    <li><em>Part</em> : {{ recommendation.part }}</li>
-    {% if recommendation.recommendation %}<li><em>Recommendation</em> : {{ recommendation.recommendation }}</li>{% endif %}
-    {% if recommendation.weight %}<li><em>Weight</em> : {{ recommendation.weight }}</li>{% endif %}
+    <li><em>{% trans "Part :" %}</em> {{ recommendation.part }}</li>
+    {% if recommendation.recommendation %}<li><em>{% trans "Recommendation :" %}</em> {{ recommendation.recommendation }}</li>{% endif %}
+    {% if recommendation.weight %}<li><em>{% trans "Weight :" %}</em> {{ recommendation.weight }}</li>{% endif %}
     <ul>
       {% regroup recommendation.vote_set.all by choice as result %}
       {% for re in result %}
@@ -21,13 +21,13 @@
 </ul>
 
 <img src="{% url trends:recommendation_group recommendation.id %}" />
-<p style="text-align: center;"><i><a href="{% url trends:documentation %}#vote_group">Trends explaination</a></i></p>
+<p style="text-align: center;"><i><a href="{% url trends:documentation %}#vote_group">{% trans "Trends explanation" %}</a></i></p>
 <br />
 <img src="{% url trends:recommendation_countries recommendation.id %}" />
-<p style="text-align: center;"><i><a href="{% url trends:documentation %}#vote_countries">Trends explaination</a></i></p>
+<p style="text-align: center;"><i><a href="{% url trends:documentation %}#vote_countries">{% trans "Trends explanation" %}</a></i></p>
 <br />
 <img src="{% url trends:recommendation_countries_absolute recommendation.id %}" />
-<p style="text-align: center;"><i><a href="{% url trends:documentation %}#vote_countries_normalized">Trends explaination</a></i></p>
+<p style="text-align: center;"><i><a href="{% url trends:documentation %}#vote_countries_normalized">{% trans "Trends explanation" %}</a></i></p>
 
 
 <table class="mep-list tablesorter">

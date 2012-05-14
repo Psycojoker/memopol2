@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}{{ mp }}, Député à l'Assemblée National – Le Mémoire Politique de La Quadrature du Net{% endblock %}
+{% block title %}{{ mp }}, Député à l'Assemblée Nationale – Le Mémoire Politique de La Quadrature du Net{% endblock %}
 
 {% block content %}
 
-<header><h1 class="document-title" id="name">{{ mp }}, Député à l'Assemblée National</h1></header>
+<header><h1 class="document-title" id="name">{{ mp }}, Député à l'Assemblée Nationale</h1></header>
 
 <section id="summary">
 <h2>Informations générales</h0>
@@ -23,12 +23,12 @@
 
 <li><i>{% if mp.gender == "F" %}Née{% else %}Né{% endif %} le</i>
 {{ mp.birth_date.day }}/{{ mp.birth_date.month }}/{{ mp.birth_date.year }} <i>à</i> {{ mp.birth_department }}</li>
-<li><i>Département: </i>
+<li><i>Département&nbsp;: </i>
     <a href="{% url mps:index_by_department mp.department.number %}">
         {{ mp.department.name }} - {{ mp.department.number }}
     </a>
 </li>
-<li><i>Groupe Politique: </i>
+<li><i>Groupe Politique&nbsp;: </i>
        <a href="{% url mps:index_by_group mp.group.abbreviation %}">
            {{ mp.group.name }} ({{ mp.group.abbreviation }})
         </a>
@@ -44,7 +44,7 @@
 <div id="nosdeputes">
     <h2 class="collapsible expanded"> NosDéputés.fr</h2>
     <ul class="body">
-        <li> <i>NosDéputés.fr: </i><a href="http://www.nosdeputes.fr/{{ mp.first_name|slugify }}-{{ mp.last_name|slugify }}">{{ mp.first_name }} {{ mp.last_name }}</a><br>
+        <li> <i>NosDéputés.fr&nbsp;: </i><a href="http://www.nosdeputes.fr/{{ mp.first_name|slugify }}-{{ mp.last_name|slugify }}">{{ mp.first_name }} {{ mp.last_name }}</a><br>
     <a href="http://www.nosdeputes.fr/{{ mp.first_name|slugify }}-{{ mp.last_name|slugify }}/graphes/lastyear"><img src="http://www.nosdeputes.fr/{{ mp.first_name|slugify }}-{{ mp.last_name|slugify }}/graphes/lastyear/total?questions=true&link=true&mapId=Map_9521.map" /></a>
     </li>
     <li>

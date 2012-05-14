@@ -1,17 +1,18 @@
+{% load i18n %}
 <thead>
   <tr>
-    {% if score_listing %}<th filter='false' class="cell-position">Position</th>{% endif %}
-    <th filter='false' class="cell-score">Score</th>
-    <th filter='false' class="row-name">MEP</th>
-    {% if not 'country' in hidden_fields %}<th filter-type='ddl' data-column-name="country" class="row-country">Country</th>{% endif %}
-    {% if not 'group' in hidden_fields %}<th filter-type='ddl' data-column-name="group" class="row-group">Group</th>{% endif %}
-    {% if choice_listing %}<th filter-type='ddl' data-column-name="choice" class="cell-choice">Choice</th>{% endif %}
-    {% if organization_role %}<th filter-type='ddl' data-column-name="organization-role" class="cell-choice">Role</th>{% endif %}
-    {% if group_role %}<th filter-type='ddl' data-column-name="group-role" class="cell-choice">Role</th>{% endif %}
-    {% if committee_role %}<th filter-type='ddl' data-column-name="committee-role" class="cell-choice">Role</th>{% endif %}
-    {% if delegation_role %}<th filter-type='ddl' data-column-name="delegation-role" class="cell-choice">Role</th>{% endif %}
-    <th filter='false' class="cell-contact {sorter: false}">Contact</th>
-    {% if score_listing %}<th filter='false' class="cell-score {sorter: false}">Scores</th>{% endif %}
-    {% if proposal_votes_listing %}<th filter='false' class="cell-score {sorter: false}">Votes</th>{% endif %}
+      {% if score_listing %}<th filter='false' class="cell-position">{% trans "Position" %}</th>{% endif %}
+      <th filter='false' class="cell-score">{% trans "Score" %}</th>
+      <th filter='false' class="row-name">{% trans "MEP" %}</th>
+      {% if not 'country' in hidden_fields %}<th filter-type='ddl' data-column-name="country" class="row-country">{% trans "Country" %}</th>{% endif %}
+      {% if not 'group' in hidden_fields %}<th filter-type='ddl' data-column-name="group" class="row-group">{% trans "Group" %}</th>{% endif %}
+      {% if choice_listing %}<th filter-type='ddl' data-column-name="choice" class="cell-choice">{% trans "Choice" %}</th>{% endif %}
+      {% if organization_role %}<th filter-type='ddl' data-column-name="organization-role" class="cell-choice">{% trans "Role" %}</th>{% endif %}
+      {% if group_role %}<th filter-type='ddl' data-column-name="group-role" class="cell-choice">{% trans "Role" %}</th>{% endif %}
+      {% if committee_role %}<th filter-type='ddl' data-column-name="committee-role" class="cell-choice">{% trans "Role" %}</th>{% endif %}
+      {% if delegation_role %}<th filter-type='ddl' data-column-name="delegation-role" class="cell-choice">{% trans "Role" %}</th>{% endif %}
+      <th filter='false' class="cell-contact {sorter: false}">{% trans "Contact" %}</th>
+      {% if score_listing %}<th filter='false' class="cell-score {sorter: false}">{% trans "Scores" %}</th>{% endif %}
+      {% if proposal_votes_listing %}<th filter='false' class="cell-score {sorter: false}">{% trans "Votes" %}</th>{% endif %}
   </tr>
 </thead>

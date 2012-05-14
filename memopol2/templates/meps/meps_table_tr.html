@@ -7,7 +7,7 @@
       {% if mep.position %}
       {{ mep.position }}
       {% else %}
-      No scores
+      {% trans "No scores" %}
       {% endif %}
   </td>
   {% endif %}
@@ -94,7 +94,7 @@
               <li style="background-color: {{ score.color }}">{% if score.proposal.short_name %}{{ score.proposal.short_name }}{% else %}{{ score.proposal.title }}{% endif %}: {{ score.value }}</li>
           {% endfor %}
           </ul>
-      <p><b>Total score:</b> {{ mep.total_score|floatformat:1 }}</p>
+          <p><b>{% trans "Total score:" %}</b> {{ mep.total_score|floatformat:1 }}</p>
       </div>
       {% else %}
       -
@@ -104,7 +104,7 @@
   {% if proposal_votes_listing %}
   <td>
       {% mep_score_on_vote mep vote %}
-      <p style="background-color: {{ mep_score.color }}"><a href="{% url votes:rep vote.id mep.id %}">Score : {{ mep_score.value }}</a></p>
+      <p style="background-color: {{ mep_score.color }}"><a href="{% url votes:rep vote.id mep.id %}">{% trans "Score :" %} {{ mep_score.value }}</a></p>
   </td>
   {% endif %}
 </tr>

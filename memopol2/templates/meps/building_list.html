@@ -16,7 +16,7 @@
     <li>{{ building.name }}</li>
     <ul>
         {% for floor in building.floors %}
-        <li><a href="{% if town.grouper == "1047" %}{% url meps:bxl_floor building.id floor %}{% else %}{% url meps:stg_floor building.id floor %}{% endif %}">{{ floor|floors_suffix }} floor</a></li>
+        <li><a href="{% if town.grouper == "1047" %}{% url meps:bxl_floor building.id floor %}{% else %}{% url meps:stg_floor building.id floor %}{% endif %}">{{ floor|floors_suffix }} {% trans "floor" %}</a></li>
         {% endfor %}
     </ul>
     {% endif %}

@@ -26,7 +26,7 @@
   {%endif%}
   <tr{% if c.finished %} class="campaign-over"{%endif%}>
      <td><a href="/campaign/view/{{c.id}}/">{{c.title}}</a></td>
-     {% blocktrans %}<td><a href="/campaign/report/{{c.id}}/">{{c.debriefing_set.count}} responses for {{ mepcnt }} MEP(s)</a></td>{% endblocktrans %}
+     <td>{% blocktrans %}<a href="/campaign/report/{{c.id}}/">{{c.debriefing_set.count}} responses for {{ mepcnt }} MEP(s)</a>{% endblocktrans %}</td>
      {% if user.is_authenticated %}<td><a href="/campaign/edit/{{c.id}}/">{% trans "Edit influence" %}</a></td>{% endif %}
   </tr>
   {%if forloop.last %}
@@ -34,6 +34,6 @@
   </table>
   {%endif%}
 {% empty %}
-{% trans "No campaigns yet." %} {% if not user.is_authenticated %}<a href="{% url admin:index %}">{%trans "Login" %}</a> {% trans "and create one" %} {% else %}<a href="/admin/campaign/campaign/add/">{% trans "Create one." %}</a>{% endif %}
+{% trans "No campaigns yet." %} {% if not user.is_authenticated %}<a href="{% url admin:index %}">{%trans "Login" %}</a> {% trans "and create a campaign" %} {% else %}<a href="/admin/campaign/campaign/add/">{% trans "Create a campaign." %}</a>{% endif %}
 {% endfor %}
 {% endblock %}

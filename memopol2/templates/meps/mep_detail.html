@@ -37,7 +37,7 @@ $(document).ready(function() {
 
 {% block content %}
 <article>
-<header><h1 class="document-title" id="name">{{ mep }}{% trans ", member of the european parliament" %}</h1></header>
+<header><h1 class="document-title" id="name">{% blocktrans %}{{ mep }}, member of the european parliament{% endblocktrans %}</h1></header>
 
 <section id="summary">
 <h2>{% trans "General information" %}</h2>
@@ -77,7 +77,23 @@ $(document).ready(function() {
     <h2 class="collapsible collapsed">{% trans "Mandates" %}</h2>
     <ul class="body mandates">
     {% for role in mep.previous_mandates %}
-    <li><img src="{{ MEDIA_URL }}img/countries/small/{{ role.country.code }}.png"/><i> {% if now > role.end %}Was{%else%}Is{%endif%} MEP of <a href="{% url meps:index_by_country mep.country.code %}">{{ role.country.name }}</a>{% if mep.party %} for <a href="{% url meps:index_by_party mep.party.id mep.party.name|slugify %}">{{ role.party }}</a>{% endif %} from {{ role.begin|date:"d F Y" }}{%if now > role.end%} to {{ role.end|date:"d F Y" }}{%endif%}</i></li>
+    <li><img src="{{ MEDIA_URL }}img/countries/small/{{ role.country.code }}.png"/>
+{% url meps:index_by_country mep.country.code as countryurl %}
+{% url meps:index_by_party mep.party.id mep.party.name|slugify as partyurl %}
+<i> 
+{% if now > role.end %}
+  {% if mep.party %}
+    {% blocktrans with role.begin|date:"d F Y" as rolebegin and role.end|date:"d F Y" as roleend %}Was MEP of <a href="{{ countryurl }}">{{ role.country.name }}</a> for <a href="{{ partyurl }}">{{ role.party }}</a> from {{ rolebegin }} to {{ roleend }}{% endblocktrans %}
+  {%else%}
+    {% blocktrans with role.begin|date:"d F Y" as rolebegin and role.end|date:"d F Y" as roleend %}Was MEP of <a href="{{ countryurl }}">{{ role.country.name }}</a> from {{ rolebegin }} to {{ roleend }}{% endblocktrans %}
+  {%endif%}
+{%else%}
+  {% if mep.party %}
+    {% blocktrans with role.begin|date:"d F Y" as rolebegin %}Is MEP of <a href="{{ countryurl }}">{{ role.country.name }}</a> for <a href="{{ partyurl }}">{{ role.party }}</a> from {{ rolebegin }}{% endblocktrans %}
+  {%else%}
+    {% blocktrans with role.begin|date:"d F Y" as rolebegin %}Is MEP of <a href="{{ countryurl }}">{{ role.country.name }}</a> from {{ rolebegin }}{% endblocktrans %}
+  {%endif%}
+{%endif%}</i></li>
     {% endfor %}
 </div>
 {% endif %}
@@ -87,7 +103,13 @@ $(document).ready(function() {
     <h2 class="collapsible collapsed">{% trans "Groups" %}</h2>
     <ul class="body groups">
     {% for group in mep.old_groups %}
-    <li><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png" alt="{{ mep.group.abbreviation }}"/><i>{% if now > group.end%}Was{%else%}Is{%endif%} MEP for <a href="{% url meps:index_by_group mep.group.abbreviation %}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a> from {{ group.begin|date:"d F Y" }}{%if now > group.end%} to {{ group.end|date:"d F Y" }}{%endif%}</i></li>
+    <li><img class="grouplogo" src="{{ MEDIA_URL }}img/groups/eu/{{ mep.group.abbreviation|cut:"/" }}.png" alt="{{ mep.group.abbreviation }}"/>
+{% url meps:index_by_group mep.group.abbreviation as groupurl %}
+<i>{% if now > group.end%}
+{% blocktrans with group.begin|date:"d F Y" as groupbegin and group.end|date:"d F Y" as groupend %}Was MEP for <a href="{{ groupurl }}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a> from {{ groupbegin }} to {{ groupend }}{% endblocktrans %}
+{%else%}
+{% blocktrans with group.begin|date:"d F Y" as groupbegin %}Is MEP for <a href="{{ groupurl }}">{{ mep.group.name }} ({{ mep.group.abbreviation }})</a> from {{ groupbegin }}{% endblocktrans %}
+{%endif%}</i></li>
     {% endfor %}
 </div>
 {% endif %}
@@ -101,7 +123,12 @@ $(document).ready(function() {
     {% endfor %}
     {% if mep.old_committees %}
     {% for role in mep.old_committees %}
-        <li class="old"><i>{% if now > role.end%}Was{%else%}Is{%endif%} {{ role.role|lower }} in {{ role.committee }} from {{ role.begin|date:"d F Y" }}{%if now > role.end%} to {{ role.end|date:"d F Y" }}{%endif%}</i></li>
+        <li class="old">
+<i>{% if now > role.end%}
+{% blocktrans with role.role|lower as role and role.begin|date:"d F Y" as rolebegin and role.end|date:"d F Y" as roleend %}Was {{ role }} in {{ role.committee }} from {{ rolebegin }} to {{ roleend }}{% endblocktrans %}
+{%else%}
+{% blocktrans with role.role|lower as role and role.begin|date:"d F Y" as rolebegin %}Is {{ role }} in {{ role.committee }} from {{ rolebegin }}{% endblocktrans %}
+{%endif%}</i></li>
     {% endfor %}
     {% endif %}
     </ul>
@@ -117,7 +144,12 @@ $(document).ready(function() {
     {% endfor %}
     {% if mep.old_delegations %}
     {% for role in mep.old_delegations %}
-        <li class="old"><i>{% if now > role.end%}Was{%else%}Is{%endif%} {{ role.role|lower }} in {{ role.delegation }} from {{ role.begin|date:"d F Y" }}{%if now > role.end%} to {{ role.end|date:"d F Y" }}{%endif%}</i></li>
+        <li class="old">
+<i>{% if now > role.end%}
+{% blocktrans with role.role|lower as role and role.begin|date:"d F Y" as rolebegin and role.end|date:"d F Y" as roleend %}Was {{ role }} in {{ role.delegation }} from {{ rolebegin }} to {{ roleend }}{% endblocktrans %}
+{%else%}
+{% blocktrans with role.role|lower as role and role.begin|date:"d F Y" as rolebegin %}Is {{ role }} in {{ role.delegation }} from {{ rolebegin }}{% endblocktrans %}
+{%endif%}</i></li>
     {% endfor %}
     {% endif %}
     </ul>
@@ -129,7 +161,14 @@ $(document).ready(function() {
     <h2 class="collapsible collapsed">{% trans "Old staff" %}</h2>
         <ul class="body organisations">
     {% for staff in mep.old_organizations %}
-    <li class="old"><i>{% if now > role.end%}Was{%else%}Is{%endif%} {{ staff.role }} in {{ staff.organization.name }} {% trans "from" %} {{ staff.begin }} {% trans "to" %} {{ staff.end }}</i></li>
+    <li class="old">
+<i>{% if now > role.end%}Was{%else%}Is{%endif%} {{ staff.role }} in {{ staff.organization.name }} {% trans "from" %} {{ staff.begin }} {% trans "to" %} {{ staff.end }}</i>
+<i>{% if now > role.end%}
+{% blocktrans %}Was {{ staff.role }} in {{ staff.organization.name }} from {{ staff.begin }} to {{ staff.end }}{% endblocktrans %}
+{%else%}
+{% blocktrans %}Is {{ staff.role }} in {{ staff.organization.name }} from {{ staff.begin }}{% endblocktrans %} 
+{%endif%} </i>
+</li>
     {% endfor %}
         </ul>
 </div>
@@ -151,7 +190,7 @@ $(document).ready(function() {
     <h2 class="collapsible collapsed">{% trans "Opinions (memopol v1)" %}</h2>
     <ul class="body opinions">
      {% for line in mep.opinionrep_set.all %}
-         <li><b>{{ line.opinion.title }}</b> (le {{ line.date }})<br/>{% autoescape off %}{{ line.opinion.content }}{% endautoescape %} &nbsp; <a target="_" href="{{ line.opinion.url }}"><br/>{% trans "Read more..." %}</a> </li>
+         <li><b>{{ line.opinion.title }}</b> {% blocktrans %}(on {{ line.date }}){% endblocktrans %}<br/>{% autoescape off %}{{ line.opinion.content }}{% endautoescape %} &nbsp; <a target="_" href="{{ line.opinion.url }}"><br/>{% trans "Read more..." %}</a> </li>
      {% endfor %}
     </ul>
 </div>
@@ -159,27 +198,27 @@ $(document).ready(function() {
 
 {% if mep.score_set.all %}
     <div id="scores">
-        <h2 class="collapsible expanded">{% trans "Total score" %} : {{ mep.total_score|floatformat:0 }}</h2>
+        <h2 class="collapsible expanded">{% trans "Total score:" %} {{ mep.total_score|floatformat:0 }}</h2>
         <ul class="body">
         {% for score in mep.score_set.all %}
         <li style="border-color:{{ score.color }};">
           <div class="score-color" style="background-color:{{ score.color }};"></div>
           <div class="inner-score">
-            <a href="{% url votes:rep score.proposal.id mep.id %}">{{ score.proposal.title }}</a>: <strong>{{ score.value }}</strong> ({% trans "on" %} {{ score.date }})<br/><a href="http://www.laquadrature.net/wiki/{{ score.proposal.id }}">{% trans "Read more..." %}</a>
+            <a href="{% url votes:rep score.proposal.id mep.id %}">{{ score.proposal.title }}</a>: <strong>{{ score.value }}</strong> {% blocktrans %}(on {{ score.date }}){% endblocktrans %}<br/><a href="http://www.laquadrature.net/wiki/{{ score.proposal.id }}">{% trans "Read more..." %}</a>
           </div>
         </li>
         {% endfor %}
         </ul>
         {% if mep.score_set.all.count > 1 %}
             <center><img src="{% url trends:comparaison_trends mep.id %}" /></center>
-            <p style="text-align: center;"><i><a href="{% url trends:documentation %}#mep">Trends explaination</a></i></p>
+            <p style="text-align: center;"><i><a href="{% url trends:documentation %}#mep">{% trans "Trends explanation" %}</a></i></p>
         {% endif %}
     </div>
 {% endif %}
 
 {% get_comment_list for mep as comment_list %}
 {% if comment_list %}
-<h2>Public Positions</h2>
+<h2>{% trans "Public Positions" %}</h2>
    <div class="body">
       {% for comment in comment_list %}
          <div>
@@ -190,8 +229,8 @@ $(document).ready(function() {
       {% endfor %}
    </div>
 {% endif %}
-<h2>Add a public position</h2>
-<p>Help us keep track of the public positions taken by this MEP</p>
+<h2>{% trans "Add a public position" %}</h2>
+<p>{% trans "Help us keep track of the public positions taken by this MEP" %}</p>
 <div class="body">
   {% render_comment_form for mep %}
 </div>

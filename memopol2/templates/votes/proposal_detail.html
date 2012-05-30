@@ -37,7 +37,7 @@
     <ul>
         {% for v in subvote.list %}
         <li>
-        <a href="{% url votes:recommendation vote.id v.id %}">{% if v.description %}{{ v.description }}{% else %}{% trans "No description yet." %}{% endif %}</a>
+        <a href="{% url votes:recommendation vote.id v.id %}">{% if v.description %}{{ v.description }}{% else %}{% trans "No description yet" %}{% endif %}</a>
             <ul class="{{ v.recommendation }} recommendation">
                 <li><em>{% trans "Part" %}</em> : {{ v.part }}</li>
                 {% if v.recommendation %}<li><em>{% trans "Recommendation" %}</em> : {{ v.recommendation }}</li>{% endif %}

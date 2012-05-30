@@ -10,9 +10,9 @@
 <p><b>{{ recommendation.description }}</b></p>
 
 <ul class="{{ recommendation.recommendation }} recommendation">
-    <li><em>{% trans "Part :" %}</em> {{ recommendation.part }}</li>
-    {% if recommendation.recommendation %}<li><em>{% trans "Recommendation :" %}</em> {{ recommendation.recommendation }}</li>{% endif %}
-    {% if recommendation.weight %}<li><em>{% trans "Weight :" %}</em> {{ recommendation.weight }}</li>{% endif %}
+    <li><em>{% trans "Part:" %}</em> {{ recommendation.part }}</li>
+    {% if recommendation.recommendation %}<li><em>{% trans "Recommendation:" %}</em> {{ recommendation.recommendation }}</li>{% endif %}
+    {% if recommendation.weight %}<li><em>{% trans "Weight:" %}</em> {{ recommendation.weight }}</li>{% endif %}
     <ul>
       {% regroup recommendation.vote_set.all by choice as result %}
       {% for re in result %}

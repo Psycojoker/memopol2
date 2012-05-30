@@ -104,7 +104,7 @@
   {% if proposal_votes_listing %}
   <td>
       {% mep_score_on_vote mep vote %}
-      <p style="background-color: {{ mep_score.color }}"><a href="{% url votes:rep vote.id mep.id %}">{% trans "Score :" %} {{ mep_score.value }}</a></p>
+      <p style="background-color: {{ mep_score.color }}"><a href="{% url votes:rep vote.id mep.id %}">{% trans "Score:" %} {{ mep_score.value }}</a></p>
   </td>
   {% endif %}
 </tr>

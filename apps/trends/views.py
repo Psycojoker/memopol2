@@ -97,26 +97,21 @@ def comparaison_trends_for_mep(request, mep_id):
     mep = get_object_or_404(MEP, id=mep_id)
     score_list = sorted(mep.score_set.all(), key=lambda k: k.proposal.date)
     scores = [s.value * s.proposal.ponderation for s in score_list]
-    maximum = [100 * s.proposal.ponderation for s in score_list]
-    #of_country = [s.of_country for s in score_list]
-    of_group = [s.of_group * s.proposal.ponderation for s in score_list]
-    of_ep = [s.of_ep * s.proposal.ponderation for s in score_list]
     if not scores:
         return HttpResponseNotFound
+    maximum = [100 * s.proposal.ponderation for s in score_list]
+    center = [x+0.5 for x in range(len(scores))]
+    of_group = [s.of_group * s.proposal.ponderation for s in score_list]
+    of_ep = [s.of_ep * s.proposal.ponderation for s in score_list]
+    
 
-    #a, b = numpy.polyfit(range(len(scores)), [int(x) for x in scores], 1)
-    #pyplot.plot([a*int(x) + b for x in range(len(scores))])
-    # line
-    maximum_bar = pyplot.bar(map(lambda x: x+0.3, range(len(scores))), maximum, width=0.4, color="#FFFFFF")
-    for i, j in zip(map(lambda x: x+0.3, range(len(scores))), score_list):
-        mep_bar = pyplot.bar(i, j.value * j.proposal.ponderation, width=0.4, color=map(lambda x: x/255., j.color_tuple))
-    #pyplot.bar(map(lambda x: x+0.3, range(len(scores))), scores, width=0.4, color=(1, 0, 0))
-    group_plot, = pyplot.plot(map(lambda x: x+0.5, range(len(scores))), of_group, 'bo', markersize=10)
-    ep_plot, = pyplot.plot(map(lambda x: x+0.5, range(len(scores))), of_ep, 'pg', markersize=10)
-    #pyplot.text(map(lambda x: x+0.5, range(len(scores))), maximum, [s.value for s in score_list])
-    for i, j, k in zip(map(lambda x: x[0]+0.28 if x[1] == 100.0 else x[0]+0.35, zip(range(len(scores)), [s.value for s in score_list])), maximum, [s.value for s in score_list]):
-        pyplot.text(i - .05, j + 10, str(k) + "%")
-    #pyplot.bar(map(lambda x: x+0.7, range(len(scores))), of_country, width=0.2, color="yellow")
+    maximum_bar = pyplot.bar(center, maximum, width=0.4, color="#FFFFFF", align='center')
+    mep_bar = pyplot.bar(center, scores, width=0.4, color=map(lambda z: map(lambda y: y/255., z.color_tuple), score_list), align='center')
+    group_plot, = pyplot.plot(center, of_group, 'bo', markersize=10)
+    ep_plot, = pyplot.plot(center, of_ep, 'pg', markersize=10)
+    for i, j, k in zip(center, maximum, [s.value for s in score_list]):
+        pyplot.text(i+0.02, j+18, str(k) + "%", horizontalalignment='center', verticalalignment='center')
+
     pyplot.legend((maximum_bar, mep_bar, ep_plot, group_plot), ('Maximum', 'MEP', 'Parliament', 'Group'), 'best', shadow=False)
     pyplot.axis([0, len(scores), 0, max(maximum) + 50])
     pyplot.title("%s - Votes scores by vote importance" % (mep.full_name))
@@ -401,9 +396,6 @@ def group_proposal_score(request, proposal_id):
 
     group_bar = {}
 
-    for group in proposal.groups:
-        if not group_color.get(group.abbreviation):
-            print group
     maxeu = 0
     #for mep in MEP.objects.filter(score__proposal=proposal, groupmep__group=group):
     a = 0.1
@@ -516,9 +508,9 @@ def group_proposal_score_heatmap(request, proposal_id):
 
     biggest_group_of_a_country = float(biggest_group_of_a_country)
 
-    a = 0
+    a = 0.5
     for country in countries:
-        b = 0
+        b = 0.5
         for group in groups:
             meps = MEP.objects.filter(score__proposal=proposal,
                                       groupmep__end__gte=proposal.date,
@@ -537,39 +529,17 @@ def group_proposal_score_heatmap(request, proposal_id):
                                          representative__mep__countrymep__end__gte=proposal.date).aggregate(Avg('value'))['value__avg']
 
             if score:
-                ax.scatter(a + 0.5,b + 0.5, s=250*(meps/biggest_group_of_a_country),
+                ax.scatter(a, b, s=280*(meps/biggest_group_of_a_country),
                              c=map(lambda x: x/255., color(score)),
-                             alpha=0.5)
+                             alpha=0.6)
 
             b += 1
         a += 1
 
-    #group_bar = {}
-    #scores = []
-
-    #maxeu = 0
-    #for score_range in range(0, 100, 10):
-        #meps = MEP.objects.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value__lt=score_range + 10 if score_range != 90 else 101, score__value__gte=score_range).distinct().count()
-        #if meps > maxeu:
-            #maxeu = meps
-        #scores.append(meps)
-
-    #for mep in MEP.objects.filter(score__proposal=proposal, groupmep__group=group):
-    #for group in proposal.groups:
-        #for score_range in range(0, 100, 10):
-            #meps = group.mep_set.filter(groupmep__end__gte=proposal.date, groupmep__begin__lte=proposal.date, score__proposal=proposal, score__value__lt=score_range + 10 if score_range != 90 else 101, score__value__gte=score_range).distinct().count()
-            #scores[score_range/10] -= meps
-            #group_bar[group.abbreviation] = pyplot.bar(score_range/10 + 0.1, meps + scores[score_range/10], width=0.8, color=group_color.get(group.abbreviation, '#FFFFFF'))
-
-    #a, b = zip(*group_bar.items())
-    #pyplot.legend(list(b), list(a), 'best', shadow=False)
     pyplot.title("Heatmap of group/country on %s" % proposal.short_name if proposal.short_name else proposal.title)
-    #pyplot.xticks(range(11), range(0, 110, 10))
+
     pyplot.xticks(map(lambda x: x + 0.5, range(len(countries))), map(lambda x: x.code, countries))
     pyplot.yticks(map(lambda x: x + 0.5, range(len(groups))), map(lambda x: x.abbreviation, groups))
-    #pyplot.xlabel("Score range 10 by 10")
-    #pyplot.ylabel("MEPs per group")
-    #pyplot.axis([0, 10.1, 0, maxeu + 3])
     check_dir(filename)
     pyplot.savefig(filename, format="png", bbox_inches='tight')
     pyplot.figure(figsize=(8, 6))

@@ -1,9 +1,0 @@
-{% if mep.committeeroles %}
-<ul>
-    {% for role in mep.committeeroles %}
-        <li><a href="{% url meps:index_by_committee role.committee.abbreviation %}">{{ role.role }} {% trans "of" %} {{ role.committee }}</a></li>
-    {% endfor %}
-</ul>
-{% else %}
-    <p>{% trans "No committee." %}</p>
-{% endif %}

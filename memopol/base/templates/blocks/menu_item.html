@@ -1,7 +1,0 @@
-{% load search_tags %}
-
-{% for item in menu.content %}
-    <div class="{{ menu.flyout_class }} columns dropdown_menu">
-        <a href="{% simple_search_shortcut item.url %}">{% if item.image %}<img src="{{ item.image }}" />{% elif item.code %}<span class="label">{{ item.code }}</span>{% endif %} {{ item.display }}</a>
-    </div>
-{% endfor %}

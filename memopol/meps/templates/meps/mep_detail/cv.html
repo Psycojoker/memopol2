@@ -1,9 +1,0 @@
-{% if mep.cv_set.all %}
-    <ul>
-        {% for line in mep.cv_set.all %}
-            <li>{{ line }}</li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>{% trans "No CV available." %}</p>
-{% endif %}

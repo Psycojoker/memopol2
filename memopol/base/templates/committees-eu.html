@@ -1,7 +1,0 @@
-<div id="committees-list">
-  <ul>
-  {% for committee in committees %}
-    <li><a href="{% url meps:index_by_committee committee.abbreviation %}" title="{{ committee.name }}"><span class="label">{{ committee.abbreviation }}</span> {{ committee.name }}</a></li>
-  {% endfor %}
-  </ul>
-</div>

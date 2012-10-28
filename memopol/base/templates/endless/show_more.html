@@ -1,9 +1,0 @@
-{% load i18n static %}
-{% if querystring %}
-    <div class="endless_container row floor">
-        <div class="one columns centered">
-            <a class="endless_more button" href="{{ path }}{{ querystring }}" rel="{{ querystring_key }}">{% if label %}{{ label }}{% else %}{% trans "more" %}{% endif %}</a>
-            <div class="endless_loading" style="display: none;"><img src="{% static 'img/loader.gif' %}" alt="{{ loading|safe }}" /></div>
-        </div>
-    </div>
-{% endif %}

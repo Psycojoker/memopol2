@@ -1,9 +1,0 @@
-{% if mep.delegationroles %}
-    <ul>
-    {% for role in mep.delegationroles %}
-        <li><a href="{% url meps:index_by_delegation role.delegation.id %}">{{ role.role }} {% trans "of" %} {{ role.delegation }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>{% trans "No delegation." %}</p>
-{% endif %}

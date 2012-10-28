@@ -1,3 +1,0 @@
-{% url votes:recommendation recommendation.proposal.id recommendation.id as recommendation %}
-{% url votes:detail recommendation.proposal.id as vote_detail %}
-<h1>{% blocktrans with recommendation.part as part and recommendation.proposal.title as proposal_title %}MEPs that have voted "{{ choice }}" on <a href="{{ recommendation }}">{{ part }}</a> of <a href="{{ vote_detail }}">{{ proposal_title }}</a>{% endblocktrans %}</h1>

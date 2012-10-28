@@ -1,5 +1,0 @@
-Sitemap: /sitemap.xml
-{% if DEBUG %}
-User-agent: *
-Disallow: /
-{% endif %}

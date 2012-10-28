@@ -1,5 +1,0 @@
-{% if object.paty %}
-<ul class="party">
-<a href="{% url meps:index_by_party object.party.id object.party.name|slugify %}">{{ object.party.name }}</a>
-</ul>
-{% endif %}

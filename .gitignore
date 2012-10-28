@@ -27,3 +27,4 @@ static/img/
 tmp/*
 memopol2.sqlite
 uploads
+static_deploy

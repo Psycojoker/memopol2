@@ -1,5 +1,7 @@
-# Import global settings to make it DRYer to extend settings.
-from django.conf.global_settings import *   # pylint: disable=W0614,W0401
+# -*- coding:utf-8 -*-
+# Import default settings from memopol core
+# Then override if needed
+from memopol.base.default_settings import *   # pylint: disable=W0614,W0401
 
 #==============================================================================
 # Generic Django project settings
@@ -22,44 +24,6 @@ LANGUAGES = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '%fg8-eo$qpi_@7tjdn^jdjx8mfp=(t=jbb@09y+zj$0ufj$v2g'
 
-INSTALLED_APPS = (
-    # django
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.admin',
-    'django.contrib.admindocs',
-    'django.contrib.markup',
-    'django.contrib.comments',
-    'django.contrib.sitemaps',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'south',
-    'flatblocks',
-    'contact_form',
-    'captcha',
-    'django_extensions',
-    'memopol.base',
-    'memopol.reps',
-    'memopol.meps',
-    'memopol.votes',
-    'memopol.mps',
-    'memopol.trends',
-    'memopol.trophies',
-    'memopol.campaign',
-    'memopol.parltrack',
-    'memopol.search',
-    'gunicorn',
-    'memopol.positions',
-    'haystack',
-    'ajax_select',
-    'dynamiq',
-    'memopol.patch_o_maton',
-    'categories',
-    'categories.editor',
-    'endless_pagination',
-)
 if DEBUG:
     INSTALLED_APPS += (
         'debug_toolbar',
@@ -109,30 +73,14 @@ TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, 'templates'),
 )
 
-TEMPLATE_CONTEXT_PROCESSORS += (
-    'django.core.context_processors.request',
-)
-
 #==============================================================================
 # Middleware
 #==============================================================================
-
-MIDDLEWARE_CLASSES += (
-)
 
 if DEBUG:
     MIDDLEWARE_CLASSES += (
         'debug_toolbar.middleware.DebugToolbarMiddleware',
     )
-
-#==============================================================================
-# Memopol core default settings
-#==============================================================================
-SNIPPETS_CACHE_DELAY = 3600 * 60 * 24
-ORGANIZATION_NAME = "La Quadrature du Net"
-PARLTRACK_URL = "http://parltrack.euwiki.org"
-ROOT_URL = "https://memopol.lqdn.fr"
-APPS_DEBUG = DEBUG  # FIXME: remove
 
 #==============================================================================
 # Current project instance settings
@@ -201,34 +149,7 @@ DATABASES = {
 #==============================================================================
 # Third party app settings
 #==============================================================================
-DEBUG_TOOLBAR_PANELS = (
-    'debug_toolbar.panels.version.VersionDebugPanel',
-    'debug_toolbar.panels.timer.TimerDebugPanel',
-    'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
-    'debug_toolbar.panels.headers.HeaderDebugPanel',
-    'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
-    'debug_toolbar.panels.template.TemplateDebugPanel',
-    'debug_toolbar.panels.sql.SQLDebugPanel',
-    'debug_toolbar.panels.signals.SignalDebugPanel',
-    'debug_toolbar.panels.logger.LoggingPanel',
-    'debug_toolbar.panels.state.StateDebugPanel',
-    'debug_toolbar.panels.htmlvalidator.HTMLValidationDebugPanel',
-)
-CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_dots',)
-CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'memopol.search.backends.WhooshEngine',
-        'PATH': '%s/memopol2.index' % PROJECT_DIR,
-    },
-}
-HAYSTACK_DOCUMENT_FIELD = "fulltext"
-AJAX_LOOKUP_CHANNELS = {
-    # dynamiq_search is a "fake" channel, it's used to dynamically switch channels
-    # in javascript - the widget needs a real one to start with something...
-    'dynamiq_search': ('dynamiq.ajax_lookups', 'DynamiqAjaxLookupSearch'),
-    'mep_achievements': ('search.ajax_lookups', 'MepAchievements'),
-}
+
 
 #==============================================================================
 # Make it possible to locally override some settings

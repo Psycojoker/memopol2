@@ -59,6 +59,7 @@ INSTALLED_APPS = (
     'categories',
     'categories.editor',
     'endless_pagination',
+    'representatives',
 )
 if DEBUG:
     INSTALLED_APPS += (

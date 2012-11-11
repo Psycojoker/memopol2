@@ -29,3 +29,5 @@ memopol2.sqlite
 uploads
 static_deploy
 .sass-cache
+fabfile.py
+ve/

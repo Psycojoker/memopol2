@@ -43,7 +43,7 @@ In a directory:
     git clone git://gitorious.org/memopol2-0/memopol2-0.git
     git clone git://gitorious.org/memopol2-0/memopol-core.git
     cd memopol2-0
-    ln -s ../memopol-core/core .
+    ln -s ../memopol-core/memopol .
     virtualenv ve
     source ve/bin/activate
     pip install -r requirements-dev.txt

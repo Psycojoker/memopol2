@@ -49,6 +49,7 @@ In a directory:
     pip install -r requirements-dev.txt
     pip install numpy
     pip install -r ../memopol-core/requirements.txt
+    python manage.py init
 
 And you should be done.
 

@@ -49,7 +49,6 @@ In a directory:
     pip install -r requirements-dev.txt
     pip install numpy
     pip install -r ../memopol-core/requirements.txt
-    python manage.py init
 
 And you should be done.
 
@@ -58,6 +57,17 @@ To enter the virtualenv
 
 To quit the virtualenv
     deactivate
+
+Build the db
+------------
+
+Simply:
+
+    python manage.py init
+
+**You will have an error like this "ContentType matching query does not
+exist.", just redo the command a second time and this will be working.** This
+is a known bug that we haven't got the time to fix.
 
 Run the server
 --------------

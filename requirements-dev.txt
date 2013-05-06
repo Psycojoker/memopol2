@@ -1,2 +1,2 @@
-Django
+Django<1.5
 git+git://github.com/joymax/django-debug-toolbar.git

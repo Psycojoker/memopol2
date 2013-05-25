@@ -49,12 +49,18 @@ In a directory:
     pip install numpy
     pip install -r ../memopol-core/requirements.txt
 
+You'll probably want to run this command to update your database:
+
+    python mange.py uptdate_meps
+
 And you should be done.
 
 To enter the virtualenv
+
     source ve/bin/activate
 
 To quit the virtualenv
+
     deactivate
 
 Build the db

@@ -51,7 +51,7 @@ In a directory:
 
 You'll probably want to run this command to update your database:
 
-    python mange.py uptdate_meps
+    python manage.py uptdate_meps
 
 And you should be done.
 
